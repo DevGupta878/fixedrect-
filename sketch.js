@@ -1,37 +1,38 @@
-var car, wall;
-var speed, weight;
+var fixedRect,movingRect;
 
 function setup() {
-  createCanvas(1000,400);
 
-  car = createSprite(50,200,50,50);
-  wall = createSprite(900,200,60,height/2)
-  wall.shapeColor = ("grey");
+  createCanvas(800,400);
+  fixedRect = createSprite(200, 200, 50, 80);
+fixedRect.shapeColor="green";
 
-  speed = random(55,90);
-  weight = random(400,1500);
+  movingRect = createSprite(400, 200, 80, 30);
+movingRect.shapeColor="green";
 
-  car.velocityX = speed;
+
 }
 
 function draw() {
-  background(0,0,0);
+  background(0,0,0);  
+movingRect.x=World.mouseX;
+movingRect.y=World.mouseY;
 
-  if(abs(car.x-wall.x) <= (car.width/2 + wall.width/2)){
-    car.velocityX = 0;
-    var deformation = (0.5*weight*speed*speed)/22500;
-     if(deformation < 100){
-       car.shapeColor = ("yellow");
-     }
-     if(deformation > 100 && deformation < 180){
-       car.shapeColor = ("green");
-     }
-     if(deformation > 180){
-       car.shapeColor = ("blue");
-     }
-  }
- 
+if(movingRect.x -fixedRect.x < fixedRect.width/2+movingRect.width/2 && 
+  fixedRect.x-movingRect.x<fixedRect.width/2+movingRect.width/2 && 
+  movingRect.y - fixedRect.y < fixedRect.height/2+movingRect.height/2 &&
+  fixedRect.y-movingRect.y   < fixedRect.height/2+movingRect.height/2){
+  fixedRect.shapeColor="red";
+  movingRect.shapeColor="red";
+
+}
+else{
+  fixedRect.shapeColor="green";
+  movingRect.shapeColor="green";
+}
+
+
+
+console.log(movingRect.x)
+
   drawSprites();
-
-
 }
